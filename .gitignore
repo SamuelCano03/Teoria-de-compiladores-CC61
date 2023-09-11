@@ -33,3 +33,6 @@
 
 #custom for flex
 *.yy.c
+
+#custom for bison
+*.tab.c
