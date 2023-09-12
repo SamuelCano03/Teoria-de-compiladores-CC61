@@ -36,3 +36,10 @@
 
 #custom for bison
 *.tab.c
+
+#custom for antlr
+*[lL]istener.*
+*[lL]exer.*
+*[pP]arser.*
+*.interp
+*.tokens
