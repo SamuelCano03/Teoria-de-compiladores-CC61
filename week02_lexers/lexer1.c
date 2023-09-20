@@ -9,6 +9,7 @@
 #define ELSE 259
 #define NUM 260
 
+
 struct Handler {
   FILE *file;
   char lexem[MAXLEXEMA];
