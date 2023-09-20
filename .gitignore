@@ -45,3 +45,4 @@
 *.tokens
 !*Parser.g4
 !*Lexer.g4
+*.class
