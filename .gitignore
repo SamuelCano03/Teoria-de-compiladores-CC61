@@ -43,5 +43,5 @@
 *[pP]arser.*
 *.interp
 *.tokens
-^*Parser.g4
-^*Lexer.g4
+!*Parser.g4
+!*Lexer.g4
