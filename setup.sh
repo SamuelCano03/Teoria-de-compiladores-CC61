@@ -1,5 +1,4 @@
 #!/usr/bin/zsh
 
-#edit this to your case
-
+alias grun = 'java org.antlr.v4.gui.TestRig'
 
