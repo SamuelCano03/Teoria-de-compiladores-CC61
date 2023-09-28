@@ -1,5 +1,5 @@
 parser grammar ExprParser;
-options {tokenVocab=ExprLexer;}
+options { tokenVocab=ExprLexer; }
 
 program
     : lststat EOF
@@ -15,7 +15,7 @@ stat
     | expr
     ;
 
-expr 
+expr
     : expr expr ('+'|'-')
     | NUM
     ;

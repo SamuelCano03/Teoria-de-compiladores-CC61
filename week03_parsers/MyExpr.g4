@@ -1,5 +1,5 @@
-grammar Expr;		
-prog:	expr EOF ;
+grammar MyExpr;		
+program:	expr EOF ;
 expr:	expr ('*'|'/') expr
     |	expr ('+'|'-') expr
     |	INT
