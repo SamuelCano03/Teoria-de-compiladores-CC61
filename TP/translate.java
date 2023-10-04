@@ -1,10 +1,7 @@
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -21,21 +18,15 @@ public class translate {
 
 		ParseTree tree = parser.graph();
 		ParseTreeWalker walker = new ParseTreeWalker();
-        visitor myVisitor = new visitor();
-        Map<String, List<Object[]>> obj=myVisitor.tupleMap;
+        listener myListener = new listener();
+        Map<String, List<Object[]>> obj=myListener.tupleMap;
 
 
-        // Crear un objeto Gson
-        //Gson gson = new Gson();
-        // Convertir el mapa a JSON
-		walker.walk(myVisitor, tree);
+       
+		walker.walk(myListener, tree);
         
         imprimirMapComoJSON(obj);
-        // Convertir el resultado a JSON
-        //String json = gson.toJson(resultado);
-
-        // Imprimir el JSON resultante
-        //System.out.println(json);
+        
 	}
     private static void imprimirMapComoJSON(Map<String, List<Object[]>> resultado) {
         System.out.print("{");
