@@ -26,8 +26,8 @@ public class translate {
 		walker.walk(myListener, tree);
         
         imprimirMapComoJSON(obj);
-        
 	}
+    
     private static void imprimirMapComoJSON(Map<String, List<Object[]>> resultado) {
         System.out.print("{");
         for (Map.Entry<String, List<Object[]>> entry : resultado.entrySet()) {
