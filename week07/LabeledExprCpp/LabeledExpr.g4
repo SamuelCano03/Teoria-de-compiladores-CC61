@@ -30,4 +30,4 @@ INT    : [0-9]+ ;
 NEWLINE: '\r'? '\n' ;
 WS     : [ \t]+ -> skip ;
 
-//antlr4 -Dlanguage=Cpp -no-listener -visitor -o libs LabeledExpr.g4
+//antlr4 -Dlanguage=Cpp -no-listener -visitor LabeledExpr.g4

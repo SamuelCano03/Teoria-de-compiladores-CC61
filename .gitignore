@@ -4,7 +4,7 @@
 # Compiled Object files
 *.slo
 *.lo
-#*.o
+*.o
 *.obj
 
 # Precompiled Headers
@@ -46,3 +46,7 @@
 !*Parser.g4
 !*Lexer.g4
 *.class
+
+#custom for llvm
+*.s
+*.ll
