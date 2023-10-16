@@ -34,3 +34,10 @@ void prefix_sum(int *src, int *dst, int N) {
 		} while (i < N);
 	}
 }
+
+//crea el archivo .dot
+//opt -dot-cfg file.ll -disable-output -enable-new-pm=0
+// crea la imagen del archivo dot
+//dot -Tpng .prefix_sum.dot -o ps.png
+
+//llc file.ll -march=arm -o file.arm
