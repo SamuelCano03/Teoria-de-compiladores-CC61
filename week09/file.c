@@ -2,8 +2,10 @@
  * this file is to be used as a test of clang IL generation capabilities
  * compile as:
  *   clang file.c: error because there is no main (entry point)
+ * 	 clang -c file.c: generates .o object file 
+ * 	 clang -S file.c -o file.ll -> genera el .ll que es igualito al .s
  *   clang -S file.c: generates file.s which contains the code in ASM
- *   clang -S -emit-llvm filec.: generates file.ll which cotains llvm IR code
+ *   clang -S -emit-llvm file.c: generates file.ll which cotains llvm IR code
  */
 
 void prefix_sum(int *src, int *dst, int N) {

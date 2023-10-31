@@ -1,0 +1,12 @@
+opt es el optimizador de llvm
+
+tiene niveles de optimización que g++ no tiene.
+
+// el comando es generar un archivo oculto .prefixsumdo
+opt -dot-cfg file.ll -disable-output -enable-new-pm=0
+
+//el comando es para generar el .png
+dot -Tpng .prefix_sum.dot -o ps.png  
+
+//este genera el archivo arm, es un ejecutable para la arquitectura arm (dispostiivos ligeros como celulares)
+llc file.ll -march=arm -o file.arm
