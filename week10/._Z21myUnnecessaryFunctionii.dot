@@ -1,0 +1,5 @@
+digraph "CFG for '_Z21myUnnecessaryFunctionii' function" {
+	label="CFG for '_Z21myUnnecessaryFunctionii' function";
+
+	Node0x55b7a694f700 [shape=record,color="#b70d28ff", style=filled, fillcolor="#b70d2870",label="{entry:\l  %a.addr = alloca i32, align 4\l  %b.addr = alloca i32, align 4\l  %sum = alloca i32, align 4\l  store i32 %a, ptr %a.addr, align 4\l  store i32 %b, ptr %b.addr, align 4\l  %0 = load i32, ptr %a.addr, align 4\l  %1 = load i32, ptr %b.addr, align 4\l  %add = add nsw i32 %0, %1\l  store i32 %add, ptr %sum, align 4\l  ret void\l}"];
+}

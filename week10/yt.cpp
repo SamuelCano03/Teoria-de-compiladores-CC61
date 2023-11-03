@@ -1,1 +1,1 @@
-int myRealFuckingFunction(int a, int b){return a+b;}
+void myUnnecessaryFunction(int a, int b){int sum=a+b;}
