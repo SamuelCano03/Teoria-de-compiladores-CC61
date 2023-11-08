@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/samuel/MyApps/**"
+                "/home/samuel/MyApps/**",
+                "/usr/include/llvm-15/**",
+                "/usr/include/llvm-c-14"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
