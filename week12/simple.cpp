@@ -19,15 +19,21 @@ int main() {
 
 	auto getchar_func = TheModule->getOrInsertFunction("getchar", IntegerType::getInt32Ty(*TheContext));
 
-	vector<Type*> Doubles(0, Type::getDoubleTy(*TheContext));
+	vector<Type*> Doubles(2, Type::getDoubleTy(*TheContext));
 	FunctionType *FT = FunctionType::get(Type::getDoubleTy(*TheContext), Doubles, false);
 
 	Function *Func = Function::Create(FT, Function::ExternalLinkage, "func", TheModule.get());
 
 	BasicBlock *BB = BasicBlock::Create(*TheContext, "i * a = 3", Func);
+	IRBuilder<> Builder(BB);
 	TheBuilder->SetInsertPoint(BB);
-	BasicBlock *cc = BasicBlock::Create(*TheContext, "entry2", memset_func);
-	TheBuilder->SetInsertPoint(cc);
+	auto ArgIt = Func->arg_begin();
+    Value *Arg1 = &*ArgIt;
+    Value *Arg2 = &*++ArgIt;
+    Builder.CreateRet(Builder.CreateAdd(Arg1, Arg2, "ans"));
+
+	/* BasicBlock *cc = BasicBlock::Create(*TheContext, "entry2", memset_func);
+	TheBuilder->SetInsertPoint(cc); */
 
 	TheModule->print(errs(), nullptr);
 
