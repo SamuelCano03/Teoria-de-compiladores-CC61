@@ -1,0 +1,52 @@
+grammar grama;
+
+/* Syntax analizer */
+
+prog
+    : func
+    | stat+ ;
+
+stat
+	: expr NEWLINE          # printExpr
+	| ID '=' expr NEWLINE   # assign
+	| NEWLINE               # blank
+	;
+
+expr
+	: expr op=('*'|'/') expr   # MulDiv
+	| expr op=('+'|'-') expr   # AddSub
+	| expr op=('<'|'>') expr    # Cmp
+	| INT                   # Int
+	| ID                    # Id
+	| '(' expr ')'          # Parens
+	;
+
+
+func
+    : 'def' ID '(' argList ')' bodyFunction
+    ;
+
+argList
+    :   ID (ID)*
+    ;
+
+bodyFunction
+    : (stat)*
+    ;
+
+/* Lexical analizer */
+
+MUL: '*' ;
+DIV: '/' ;
+ADD: '+' ;
+SUB: '-' ;
+CMPMN: '<' ;
+CMPMY: '>' ;
+
+
+ID     : [a-zA-Z]+ ;
+INT    : [0-9]+ ;
+NEWLINE: '\r'? '\n' ;
+WS     : [ \t]+ -> skip ;
+
+//antlr4 -Dlanguage=Cpp -no-listener -visitor grama.g4

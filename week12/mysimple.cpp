@@ -12,7 +12,6 @@ using namespace llvm;
 using namespace std;
 
 int main() {
-    // Crear un contexto y un módulo
     auto TheContext = make_unique<LLVMContext>();
     auto TheModule = make_unique<Module>("SumModule", *TheContext);
 
@@ -34,14 +33,7 @@ int main() {
     Value *Arg1 = &*ArgIt++;
     Value *Arg2 = &*ArgIt;
 
-    // Crear una instrucción de suma
-    //Value *SumResult = Builder.CreateAdd(Arg1, Arg2, "ans");
-
-    // Crear una instrucción de retorno
     Builder.CreateRet(Builder.CreateAdd(Arg1, Arg2, "ans"));
-
-    // Verificar la validez del módulo
-    //verifyModule(*TheModule, &errs());
 
     // Imprimir el módulo generado
     TheModule->print(errs(), nullptr);
