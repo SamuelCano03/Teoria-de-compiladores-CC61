@@ -4,27 +4,21 @@ prog: command+ ;
 
 
 command 
-        : 'ls' path NEWLINE     #lsco
-        | 'cd' path NEWLINE     #cdco
-        | 'mkdir' path NEWLINE  #mkco
+        : 'ls' path? NEWLINE     #lsco
+        | 'cd' path? NEWLINE     #cdco
+        | 'mkdir' path? NEWLINE  #mkco
         | 'echo' STRING NEWLINE #ecco
         | NEWLINE               #blank
         ;
 
 
 // Regla para la ruta
-path: item=(ID | '.' | '..') ('/' path)? ;
+item: ID | '.' | '..';
+dir: item ('/' item)* ;
+path: dir ;
 
-
-
-
-
-
-
-
-/////////////////////////////////////////////////////
-//lexer
 //////////////////////////////////////////////////////
+//lexer
 
 // Definición de identificador (puedes expandir según necesites)
 ID : [a-zA-Z][a-zA-Z0-9]+;

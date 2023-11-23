@@ -1,4 +1,4 @@
-grammar LabeledExpr;
+grammar calci;
 
 /* Syntax analizer */
 
@@ -11,9 +11,9 @@ stat
 	;
 
 expr
-	: expr expr op=('*'|'/')    	# MulDiv
+	: expr expr op=('*'|'/')    	# MulDivi
 	| expr expr op=('+'|'-')   		# AddSub
-	| expr expr op=('^' | '|' | '&')	# Bitwise
+	| expr expr op=('^' | '|' | '&')# Bitwise
 	| INT                   		# Int
 	| ID                    		# Id
 	| '(' expr ')'          		# Parens

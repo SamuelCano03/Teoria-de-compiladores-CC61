@@ -1,81 +1,81 @@
-// Generated from LabeledExpr.g4 by ANTLR 4.13.1
+// Generated from calci.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
- * by {@link LabeledExprParser}.
+ * by {@link calciParser}.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
+public interface calciVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link LabeledExprParser#prog}.
+	 * Visit a parse tree produced by {@link calciParser#prog}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProg(LabeledExprParser.ProgContext ctx);
+	T visitProg(calciParser.ProgContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code printExpr}
-	 * labeled alternative in {@link LabeledExprParser#stat}.
+	 * labeled alternative in {@link calciParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrintExpr(LabeledExprParser.PrintExprContext ctx);
+	T visitPrintExpr(calciParser.PrintExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code assign}
-	 * labeled alternative in {@link LabeledExprParser#stat}.
+	 * labeled alternative in {@link calciParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign(LabeledExprParser.AssignContext ctx);
+	T visitAssign(calciParser.AssignContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code blank}
-	 * labeled alternative in {@link LabeledExprParser#stat}.
+	 * labeled alternative in {@link calciParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBlank(LabeledExprParser.BlankContext ctx);
+	T visitBlank(calciParser.BlankContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Bitwise}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBitwise(LabeledExprParser.BitwiseContext ctx);
+	T visitBitwise(calciParser.BitwiseContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * Visit a parse tree produced by the {@code MulDivi}
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMulDiv(LabeledExprParser.MulDivContext ctx);
+	T visitMulDivi(calciParser.MulDiviContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code AddSub}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAddSub(LabeledExprParser.AddSubContext ctx);
+	T visitAddSub(calciParser.AddSubContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parens}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParens(LabeledExprParser.ParensContext ctx);
+	T visitParens(calciParser.ParensContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Id}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitId(LabeledExprParser.IdContext ctx);
+	T visitId(calciParser.IdContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Int}
-	 * labeled alternative in {@link LabeledExprParser#expr}.
+	 * labeled alternative in {@link calciParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInt(LabeledExprParser.IntContext ctx);
+	T visitInt(calciParser.IntContext ctx);
 }

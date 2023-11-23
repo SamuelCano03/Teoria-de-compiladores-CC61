@@ -31,6 +31,10 @@ public:
 
     virtual std::any visitBlank(gramaticaParser::BlankContext *context) = 0;
 
+    virtual std::any visitItem(gramaticaParser::ItemContext *context) = 0;
+
+    virtual std::any visitDir(gramaticaParser::DirContext *context) = 0;
+
     virtual std::any visitPath(gramaticaParser::PathContext *context) = 0;
 
 

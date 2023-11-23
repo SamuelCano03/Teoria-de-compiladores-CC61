@@ -2,12 +2,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /* added the Impl at the end of the class to avoid it being .gitignored sorry */
-public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
+public class EvalVisitorImpl extends calciBaseVisitor<Integer> {
 	Map<String, Integer> memory = new HashMap<String, Integer>();
 
 	/* ID '=' expr NEWLINE */
 	@Override
-	public Integer visitAssign(LabeledExprParser.AssignContext ctx) {
+	public Integer visitAssign(calciParser.AssignContext ctx) {
 		String id = ctx.ID().getText();
 		int value = visit(ctx.expr());
 		memory.put(id, value);
@@ -16,7 +16,7 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 
 	/* expr NEWLINE */
 	@Override
-	public Integer visitPrintExpr(LabeledExprParser.PrintExprContext ctx) {
+	public Integer visitPrintExpr(calciParser.PrintExprContext ctx) {
 		Integer value = visit(ctx.expr());
 		System.out.println(value);
 		return 0;
@@ -24,13 +24,13 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 
 	/* INT */
 	@Override
-	public Integer visitInt(LabeledExprParser.IntContext ctx) {
+	public Integer visitInt(calciParser.IntContext ctx) {
 		return Integer.valueOf(ctx.INT().getText());
 	}
 
 	/* ID */
 	@Override
-	public Integer visitId(LabeledExprParser.IdContext ctx) {
+	public Integer visitId(calciParser.IdContext ctx) {
 		String id = ctx.ID().getText();
 		if (memory.containsKey(id)) return memory.get(id);
 		return 0;
@@ -38,14 +38,14 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 
 	/* expr expr op=('^'|'|'| '&')  */
 	@Override
-	public Integer visitBitwise(LabeledExprParser.BitwiseContext ctx) {
+	public Integer visitBitwise(calciParser.BitwiseContext ctx) {
 		int left = visit(ctx.expr(0));
 		int right = visit(ctx.expr(1));
-		if (ctx.op.getType() == LabeledExprParser.OR) {
+		if (ctx.op.getType() == calciParser.AND) {
 
 			return (left | right);
 		} 
-		else if( ctx.op.getType() == LabeledExprLexer.AND){
+		else if( ctx.op.getType() == calciLexer.AND){
 			return (left & right);
 		}
 		else{
@@ -55,10 +55,10 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 
 	/* expr expr op=('*'|'/')  */
 	@Override
-	public Integer visitMulDiv(LabeledExprParser.MulDivContext ctx) {
+	public Integer visitMulDivi(calciParser.MulDiviContext ctx) {
 		int left = visit(ctx.expr(0));
 		int right = visit(ctx.expr(1));
-		if (ctx.op.getType() == LabeledExprParser.MUL) {
+		if (ctx.op.getType() == calciParser.MUL) {
 			return left * right;
 		} else {
 			return left / right;
@@ -67,10 +67,10 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 
 	/* expr expr op=('+'|'-')  */
 	@Override
-	public Integer visitAddSub(LabeledExprParser.AddSubContext ctx) {
+	public Integer visitAddSub(calciParser.AddSubContext ctx) {
 		int left = visit(ctx.expr(0));
 		int right = visit(ctx.expr(1));
-		if (ctx.op.getType() == LabeledExprParser.ADD) {
+		if (ctx.op.getType() == calciParser.ADD) {
 			return left + right;
 		} else {
 			return left - right;
@@ -79,7 +79,7 @@ public class EvalVisitorImpl extends LabeledExprBaseVisitor<Integer> {
 	
 	/* '(' expr ')' */
 	@Override
-	public Integer visitParens(LabeledExprParser.ParensContext ctx) {
+	public Integer visitParens(calciParser.ParensContext ctx) {
 		return visit(ctx.expr());
 	}
 }

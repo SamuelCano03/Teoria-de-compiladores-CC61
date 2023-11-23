@@ -10,9 +10,9 @@ public class Calc {
 		InputStream is = System.in;
 		if (inputFile != null) is = new FileInputStream(inputFile);
 		CharStream input = CharStreams.fromStream(is);
-		LabeledExprLexer lexer = new LabeledExprLexer(input);
+		calciLexer lexer = new calciLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		LabeledExprParser parser = new LabeledExprParser(tokens);
+		calciParser parser = new calciParser(tokens);
 		ParseTree tree = parser.prog();
 		EvalVisitorImpl eval = new EvalVisitorImpl();
 		eval.visit(tree);

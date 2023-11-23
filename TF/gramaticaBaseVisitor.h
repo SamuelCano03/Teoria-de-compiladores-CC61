@@ -39,6 +39,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitItem(gramaticaParser::ItemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDir(gramaticaParser::DirContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitPath(gramaticaParser::PathContext *ctx) override {
     return visitChildren(ctx);
   }
