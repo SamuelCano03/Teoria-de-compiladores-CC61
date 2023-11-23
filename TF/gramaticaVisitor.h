@@ -29,6 +29,10 @@ public:
 
     virtual std::any visitEcco(gramaticaParser::EccoContext *context) = 0;
 
+    virtual std::any visitPwco(gramaticaParser::PwcoContext *context) = 0;
+
+    virtual std::any visitExco(gramaticaParser::ExcoContext *context) = 0;
+
     virtual std::any visitBlank(gramaticaParser::BlankContext *context) = 0;
 
     virtual std::any visitItem(gramaticaParser::ItemContext *context) = 0;

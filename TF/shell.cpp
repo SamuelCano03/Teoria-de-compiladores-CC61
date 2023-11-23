@@ -3,22 +3,13 @@
 #include "antlr4-runtime.h"
 #include "gramaticaLexer.h"
 #include "gramaticaParser.h"
-using namespace std;
 using namespace antlr4;
-/*import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-import java.io.FileInputStream;
-import java.io.InputStream;
-*/
-
-int main(int argc, char** argv) {
-	// solve(argc, argv);
+void solve(){
     string line;
     cout<<"Samu@Lenova>>";
 	while(true){
-        
-        getline(cin,line);
-        line=line+"\n";
+		getline(cin,line);
+		line=line+"\n";
 		ANTLRInputStream input(line);
 		gramaticaLexer lexer(&input);
 		CommonTokenStream token(&lexer);
@@ -26,8 +17,12 @@ int main(int argc, char** argv) {
 		auto tree = parser.prog();
 		myvisitor eval;
 		eval.visitProg(tree);
-        cout<<"\nSamu@Lenova>>";
+		if(eval.getExit())break;
+		cout<<"\nSamu@Lenova>>";
 	}
+}
+int main(int argc, char** argv) {
+	solve();
     return 0;
 }
 

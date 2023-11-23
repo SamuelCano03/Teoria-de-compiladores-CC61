@@ -35,6 +35,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitPwco(gramaticaParser::PwcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitExco(gramaticaParser::ExcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitBlank(gramaticaParser::BlankContext *ctx) override {
     return visitChildren(ctx);
   }
