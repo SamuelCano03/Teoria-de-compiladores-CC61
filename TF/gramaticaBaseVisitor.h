@@ -19,6 +19,22 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitIfst(gramaticaParser::IfstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitForst(gramaticaParser::ForstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitOtherst(gramaticaParser::OtherstContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitExpr(gramaticaParser::ExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitLsco(gramaticaParser::LscoContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -35,7 +51,23 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitRmco(gramaticaParser::RmcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitCpco(gramaticaParser::CpcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMvco(gramaticaParser::MvcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitPwco(gramaticaParser::PwcoContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClco(gramaticaParser::ClcoContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -47,15 +79,23 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitPath(gramaticaParser::PathContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitItem(gramaticaParser::ItemContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitDir(gramaticaParser::DirContext *ctx) override {
+  virtual std::any visitVar(gramaticaParser::VarContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitPath(gramaticaParser::PathContext *ctx) override {
+  virtual std::any visitMsg(gramaticaParser::MsgContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFlag(gramaticaParser::FlagContext *ctx) override {
     return visitChildren(ctx);
   }
 
