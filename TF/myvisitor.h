@@ -41,6 +41,14 @@ public:
 			if(rmctx){
 				visitRmco(rmctx);continue;
 			}
+			auto cpctx=dynamic_cast<gramaticaParser::CpcoContext*>(mylifecontext);
+			if(cpctx){
+				visitCpco(cpctx);continue;
+			}
+			auto mvctx=dynamic_cast<gramaticaParser::MvcoContext*>(mylifecontext);
+			if(mvctx){
+				visitMvco(mvctx);continue;
+			}
 			auto clctx=dynamic_cast<gramaticaParser::ClcoContext*>(mylifecontext);
 			if(clctx){
 				visitClco(clctx);continue;
@@ -67,18 +75,18 @@ public:
 		}
 		return any();
 	}
-	any visitStat(gramaticaParser::StatContext *ctx){
-		if(ctx!=nullptr){
-			string m=ctx->getText();
-			system(m.c_str());
-		}
-		return any();
+	// if
+	any visitIfst(gramaticaParser::IfstContext *ctx){
+		
 	}
-	// ls <path>
+	// ls flag? <path>
 	any visitLsco(gramaticaParser::LscoContext *ctx)  {
-		string dir="ls";
+		string dir="ls ";
+		if(ctx->flag()!=nullptr){
+			dir=dir+ctx->flag()->getText()+" ";
+		}
 		if(ctx->path() != nullptr){
-			dir = "ls "+ctx->path()->getText();
+			dir = dir+ctx->path()->getText();
 		}
 		system(dir.c_str());
 		return any();
@@ -137,25 +145,93 @@ public:
 			dir+=ctx->flag()->getText()+ " ";
 		}
 		if(ctx->path()!=nullptr){
-			for(auto e: ctx->path()->children){
-				string tmp=e->getText();
+			int dumby = ctx->path()->children.size();
+			for(int i=0;i<dumby;i++){
+				string tmp = ctx->path()->children[i]->getText();
 				if(tmp[0]=='$'){
 					tmp=getenv(tmp.substr(1,tmp.size()-1).c_str());
 				}
-				dir=dir+tmp+"/"; /////////error
+				dir=dir+tmp;
+				if(i!=dumby-1)
+					dir=dir+"/";
 			}
 		}
 		dir="rm "+dir;
+		// cout<<dir<<endl;
 		system(dir.c_str());
 		return visitChildren(ctx);
 	}
+	// mv path path
+	any visitMvco(gramaticaParser::MvcoContext *ctx){
+		auto pa1=ctx->children[1], pa2=ctx->children[2];
+		string p1=" ", p2=" ";
+		if(pa1!=nullptr){
+			int dumby = pa1->children.size();
+			for(int i=0;i<dumby;i++){
+				string tmp = pa1->children[i]->getText();
+				if(tmp[0]=='$'){
+					tmp=getenv(tmp.substr(1,tmp.size()-1).c_str());
+				}
+				p1=p1+tmp;
+				if(i!=dumby-1)
+					p1=p1+"/";
+			}
+		}
+		if(pa2!=nullptr){
+			int dumby = pa2->children.size();
+			for(int i=0;i<dumby;i++){
+				string tmp = pa2->children[i]->getText();
+				if(tmp[0]=='$'){
+					tmp=getenv(tmp.substr(1,tmp.size()-1).c_str());
+				}
+				p2=p2+tmp;
+				if(i!=dumby-1)
+					p2=p2+"/";
+			}
+		}
+		string msg="mv "+p1+" "+p2;
+		system(msg.c_str());
+		return any();
+	}
+	// cp path path
+	any visitCpco(gramaticaParser::CpcoContext *ctx){
+		auto pa1=ctx->children[1], pa2=ctx->children[2];
+		string p1=" ", p2=" ";
+		if(pa1!=nullptr){
+			int dumby = pa1->children.size();
+			for(int i=0;i<dumby;i++){
+				string tmp = pa1->children[i]->getText();
+				if(tmp[0]=='$'){
+					tmp=getenv(tmp.substr(1,tmp.size()-1).c_str());
+				}
+				p1=p1+tmp;
+				if(i!=dumby-1)
+					p1=p1+"/";
+			}
+		}
+		if(pa2!=nullptr){
+			int dumby = pa2->children.size();
+			for(int i=0;i<dumby;i++){
+				string tmp = pa2->children[i]->getText();
+				if(tmp[0]=='$'){
+					tmp=getenv(tmp.substr(1,tmp.size()-1).c_str());
+				}
+				p2=p2+tmp;
+				if(i!=dumby-1)
+					p2=p2+"/";
+			}
+		}
+		string msg="cp "+p1+" "+p2;
+		system(msg.c_str());
+		return any();
+	}
 	any visitClco(gramaticaParser::ClcoContext *ctx){
 		system("clear");
-		return visitChildren(ctx);
+		return any();
 	}
 	any visitExco(gramaticaParser::ExcoContext *ctx)  {
 		exit=true;
-		return visitChildren(ctx);
+		return any();
 	}
 
 	any visitOtherst(gramaticaParser::OtherstContext *ctx){

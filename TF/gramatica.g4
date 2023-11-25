@@ -3,7 +3,7 @@ grammar gramatica;
 prog: (command|stat)* EOF;
 
 stat
-        : 'if' '[' expr flag expr '];' 'then' NEWLINE      #ifst
+        : 'if' '[' expr flag expr '];' 'then' command ('else' command)? 'fi' NEWLINE  #ifst
         | 'for' NEWLINE                         #forst
         | expr NEWLINE                        #otherst
         ;
@@ -21,8 +21,8 @@ command
         | 'mkdir'   path        NEWLINE #mkco
         | 'echo'    (var|msg)   NEWLINE #ecco
         |'rm' flag? path        NEWLINE #rmco
-        | 'cp'      path        NEWLINE #cpco
-        | 'mv'      path        NEWLINE #mvco
+        | 'cp' path path        NEWLINE #cpco
+        | 'mv' path path        NEWLINE #mvco
         | 'pwd'                 NEWLINE #pwco
         | 'clear'               NEWLINE #clco
         | 'exit'                NEWLINE #exco
