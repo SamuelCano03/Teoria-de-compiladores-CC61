@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**",
                 "/home/samuel/MyApps/**",
                 "/usr/include/llvm-15/**",
-                "/usr/include/llvm-c-14"
+                "/usr/include/llvm-c-15/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

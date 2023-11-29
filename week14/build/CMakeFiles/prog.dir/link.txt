@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/prog.dir/mainllvm.cpp.o -o prog   -L/usr/include/llvm-c-15  -Wl,-rpath,/usr/include/llvm-c-15 -lLLVM-15 

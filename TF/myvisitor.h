@@ -77,7 +77,7 @@ public:
 	}
 	// if
 	any visitIfst(gramaticaParser::IfstContext *ctx){
-		
+		return any();
 	}
 	// ls flag? <path>
 	any visitLsco(gramaticaParser::LscoContext *ctx)  {

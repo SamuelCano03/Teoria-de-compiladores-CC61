@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/main.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/main.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/main.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/pcdosBaseVisitor.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosBaseVisitor.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosBaseVisitor.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/pcdosLexer.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosLexer.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosLexer.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/pcdosParser.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosParser.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosParser.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/pcdosVisitor.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosVisitor.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosVisitor.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/build",
+  "command": "/usr/bin/c++  -I/home/samuel/MyApps/antlr4-cpp/run/usr/local/include -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/pcdosVisitorImpl.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosVisitorImpl.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/pc2_canaval/pcdosVisitorImpl.cpp"
+}
+]

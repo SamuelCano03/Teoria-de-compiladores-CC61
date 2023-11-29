@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/week14/build",
+  "command": "/usr/bin/c++  -I/usr/include/llvm-15 -I/usr/include/llvm-c-15  -o CMakeFiles/prog.dir/mainllvm.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/week14/mainllvm.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/week14/mainllvm.cpp"
+}
+]
