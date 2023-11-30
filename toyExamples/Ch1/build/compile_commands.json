@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/build",
+  "command": "/usr/bin/c++  -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/AST.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/AST.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/AST.cpp"
+},
+{
+  "directory": "/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/build",
+  "command": "/usr/bin/c++  -I/usr/lib/llvm-15/include  -o CMakeFiles/prog.dir/toyc.cpp.o -c /home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/toyc.cpp",
+  "file": "/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/toyc.cpp"
+}
+]

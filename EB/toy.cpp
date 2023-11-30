@@ -30,6 +30,8 @@
 using namespace llvm;
 using namespace llvm::orc;
 
+#define up unique_ptr
+
 //===----------------------------------------------------------------------===//
 // Lexer
 //===----------------------------------------------------------------------===//
@@ -45,7 +47,8 @@ enum Token {
 
   // primary
   tok_identifier = -4,
-  tok_number = -5
+  tok_number = -5,
+  tok_if = -6
 };
 
 static std::string IdentifierStr; // Filled in if tok_identifier
@@ -111,7 +114,7 @@ namespace {
 /// ExprAST - Base class for all expression nodes.
 class ExprAST {
 public:
-  virtual ~ExprAST() = default;
+  virtual ~ExprAST() = default; //las clases derivadas adoptarán el destructor por defecto
 
   virtual Value *codegen() = 0;
 };
@@ -136,27 +139,46 @@ public:
   Value *codegen() override;
 };
 
+
+
+//////////////////////////////CORREGIR ESTO////////////////////////////////////////
 /// BinaryExprAST - Expression class for a binary operator.
 class BinaryExprAST : public ExprAST {
-  char Op;
-  std::unique_ptr<ExprAST> LHS, RHS;
+  char Op; std::up<ExprAST> LHS, RHS;
 
 public:
-  BinaryExprAST(char Op, std::unique_ptr<ExprAST> LHS,
-                std::unique_ptr<ExprAST> RHS)
-      : Op(Op), LHS(std::move(LHS)), RHS(std::move(RHS)) {}
+  BinaryExprAST(char Op, std::up<ExprAST> LHS,std::up<ExprAST> RHS)
+  : Op(Op), LHS(std::move(LHS)), RHS(std::move(RHS)) {}
 
   Value *codegen() override;
 };
+//////////////////////////////CORREGIR ESTO////////////////////////////////////////
+/// UnaryExprAST - Expression class for a binary operator in prefix notation.
+class UnaryExprAST : public ExprAST {
+  char Op; std::up<ExprAST> LHS, RHS;
+
+public:
+  UnaryExprAST(char Op, std::up<ExprAST> LHS,std::up<ExprAST> RHS)
+  : Op(Op), LHS(std::move(LHS)), RHS(std::move(RHS)) {}
+
+  Value *codegen() override;
+};
+//////////////////////////////CORREGIR ESTO////////////////////////////////////////
+
+
+
+
+
+
+
 
 /// CallExprAST - Expression class for function calls.
 class CallExprAST : public ExprAST {
   std::string Callee;
-  std::vector<std::unique_ptr<ExprAST>> Args;
+  std::vector<std::up<ExprAST>> Args;
 
 public:
-  CallExprAST(const std::string &Callee,
-              std::vector<std::unique_ptr<ExprAST>> Args)
+  CallExprAST(const std::string &Callee,std::vector<std::up<ExprAST>> Args)
       : Callee(Callee), Args(std::move(Args)) {}
 
   Value *codegen() override;
@@ -179,12 +201,12 @@ public:
 
 /// FunctionAST - This class represents a function definition itself.
 class FunctionAST {
-  std::unique_ptr<PrototypeAST> Proto;
-  std::unique_ptr<ExprAST> Body;
+  std::up<PrototypeAST> Proto;
+  std::up<ExprAST> Body;
 
 public:
-  FunctionAST(std::unique_ptr<PrototypeAST> Proto,
-              std::unique_ptr<ExprAST> Body)
+  FunctionAST(std::up<PrototypeAST> Proto,
+              std::up<ExprAST> Body)
       : Proto(std::move(Proto)), Body(std::move(Body)) {}
 
   Function *codegen();
@@ -201,60 +223,33 @@ public:
 /// lexer and updates CurTok with its results.
 static int CurTok;
 static int getNextToken() { return CurTok = gettok(); }
-
-/// BinopPrecedence - This holds the precedence for each binary operator that is
-/// defined.
-static std::map<char, int> BinopPrecedence;
-
-/// GetTokPrecedence - Get the precedence of the pending binary operator token.
-static int GetTokPrecedence() {
-  if (!isascii(CurTok))
-    return -1;
-
-  // Make sure it's a declared binop.
-  int TokPrec = BinopPrecedence[CurTok];
-  if (TokPrec <= 0)
-    return -1;
-  return TokPrec;
-}
+bool isUnaryOp(){return IdentifierStr=="+";}
 
 /// LogError* - These are little helper functions for error handling.
-std::unique_ptr<ExprAST> LogError(const char *Str) {
+std::up<ExprAST> LogError(const char *Str) {
   fprintf(stderr, "Error: %s\n", Str);
   return nullptr;
 }
-
-std::unique_ptr<PrototypeAST> LogErrorP(const char *Str) {
+std::up<PrototypeAST> LogErrorP(const char *Str) {
   LogError(Str);
   return nullptr;
 }
 
-static std::unique_ptr<ExprAST> ParseExpression();
+static std::up<ExprAST> ParseExpression();
 
 /// numberexpr ::= number
-static std::unique_ptr<ExprAST> ParseNumberExpr() {
+static std::up<ExprAST> ParseNumberExpr() {
   auto Result = std::make_unique<NumberExprAST>(NumVal);
   getNextToken(); // consume the number
   return std::move(Result);
 }
 
-/// parenexpr ::= '(' expression ')'
-static std::unique_ptr<ExprAST> ParseParenExpr() {
-  getNextToken(); // eat (.
-  auto V = ParseExpression();
-  if (!V)
-    return nullptr;
 
-  if (CurTok != ')')
-    return LogError("expected ')'");
-  getNextToken(); // eat ).
-  return V;
-}
 
 /// identifierexpr
 ///   ::= identifier
 ///   ::= identifier '(' expression* ')'
-static std::unique_ptr<ExprAST> ParseIdentifierExpr() {
+static std::up<ExprAST> ParseIdentifierExpr() {
   std::string IdName = IdentifierStr;
 
   getNextToken(); // eat identifier.
@@ -264,7 +259,7 @@ static std::unique_ptr<ExprAST> ParseIdentifierExpr() {
 
   // Call.
   getNextToken(); // eat (
-  std::vector<std::unique_ptr<ExprAST>> Args;
+  std::vector<std::up<ExprAST>> Args;
   if (CurTok != ')') {
     while (true) {
       if (auto Arg = ParseExpression())
@@ -290,8 +285,7 @@ static std::unique_ptr<ExprAST> ParseIdentifierExpr() {
 /// primary
 ///   ::= identifierexpr
 ///   ::= numberexpr
-///   ::= parenexpr
-static std::unique_ptr<ExprAST> ParsePrimary() {
+static std::up<ExprAST> ParsePrimary() {
   switch (CurTok) {
   default:
     return LogError("unknown token when expecting an expression");
@@ -299,62 +293,39 @@ static std::unique_ptr<ExprAST> ParsePrimary() {
     return ParseIdentifierExpr();
   case tok_number:
     return ParseNumberExpr();
-  case '(':
-    return ParseParenExpr();
   }
 }
 
-/// binoprhs
-///   ::= ('+' primary)*
-static std::unique_ptr<ExprAST> ParseBinOpRHS(int ExprPrec,
-                                              std::unique_ptr<ExprAST> LHS) {
-  // If this is a binop, find its precedence.
-  while (true) {
-    int TokPrec = GetTokPrecedence();
 
-    // If this is a binop that binds at least as tightly as the current binop,
-    // consume it, otherwise we are done.
-    if (TokPrec < ExprPrec)
-      return LHS;
 
-    // Okay, we know this is a binop.
-    int BinOp = CurTok;
-    getNextToken(); // eat binop
+/// prefixexpr ::= (op prefixexpr)+
+static std::unique_ptr<ExprAST> ParseBinOpRHS(int op) {
+  // * - 8 9 4
+  // Check if the current token is a unary operator.
+  if(true){
+      int UnaryOp = op;
+      getNextToken(); // eat unaryop
+      auto LHS=ParsePrimary();
+      getNextToken();
+      auto RHS=ParsePrimary();
+      if(!RHS || !LHS) return nullptr ;
 
-    // Parse the primary expression after the binary operator.
-    auto RHS = ParsePrimary();
-    if (!RHS)
-      return nullptr;
-
-    // If BinOp binds less tightly with RHS than the operator after RHS, let
-    // the pending operator take RHS as its LHS.
-    int NextPrec = GetTokPrecedence();
-    if (TokPrec < NextPrec) {
-      RHS = ParseBinOpRHS(TokPrec + 1, std::move(RHS));
-      if (!RHS)
-        return nullptr;
-    }
-
-    // Merge LHS/RHS.
-    LHS =
-        std::make_unique<BinaryExprAST>(BinOp, std::move(LHS), std::move(RHS));
+      return std::make_unique<BinaryExprAST>(UnaryOp, std::move(LHS), std::move(RHS));
   }
-}
+  return nullptr;
 
+}
 /// expression
 ///   ::= primary binoprhs
 ///
-static std::unique_ptr<ExprAST> ParseExpression() {
-  auto LHS = ParsePrimary();
-  if (!LHS)
-    return nullptr;
-
-  return ParseBinOpRHS(0, std::move(LHS));
+static std::up<ExprAST> ParseExpression() {
+  int op=CurTok;
+  return ParseBinOpRHS(op);
 }
 
 /// prototype
 ///   ::= id '(' id* ')'
-static std::unique_ptr<PrototypeAST> ParsePrototype() {
+static std::up<PrototypeAST> ParsePrototype() {
   if (CurTok != tok_identifier)
     return LogErrorP("Expected function name in prototype");
 
@@ -377,7 +348,7 @@ static std::unique_ptr<PrototypeAST> ParsePrototype() {
 }
 
 /// definition ::= 'def' prototype expression
-static std::unique_ptr<FunctionAST> ParseDefinition() {
+static std::up<FunctionAST> ParseDefinition() {
   getNextToken(); // eat def.
   auto Proto = ParsePrototype();
   if (!Proto)
@@ -389,33 +360,34 @@ static std::unique_ptr<FunctionAST> ParseDefinition() {
 }
 
 /// toplevelexpr ::= expression
-static std::unique_ptr<FunctionAST> ParseTopLevelExpr() {
+static std::up<FunctionAST> ParseTopLevelExpr() {
   if (auto E = ParseExpression()) {
     // Make an anonymous proto.
-    auto Proto = std::make_unique<PrototypeAST>("__anon_expr",
-                                                 std::vector<std::string>());
+    auto Proto = std::make_unique<PrototypeAST>("__anon_expr",std::vector<std::string>());
     return std::make_unique<FunctionAST>(std::move(Proto), std::move(E));
   }
   return nullptr;
 }
 
 /// external ::= 'extern' prototype
-static std::unique_ptr<PrototypeAST> ParseExtern() {
+static std::up<PrototypeAST> ParseExtern() {
   getNextToken(); // eat extern.
   return ParsePrototype();
 }
+
+
 
 //===----------------------------------------------------------------------===//
 // Code Generation
 //===----------------------------------------------------------------------===//
 
-static std::unique_ptr<LLVMContext> TheContext;
-static std::unique_ptr<Module> TheModule;
-static std::unique_ptr<IRBuilder<>> Builder;
+static std::up<LLVMContext> TheContext;
+static std::up<Module> TheModule;
+static std::up<IRBuilder<>> Builder;
 static std::map<std::string, Value *> NamedValues;
-static std::unique_ptr<legacy::FunctionPassManager> TheFPM;
-static std::unique_ptr<KaleidoscopeJIT> TheJIT;
-static std::map<std::string, std::unique_ptr<PrototypeAST>> FunctionProtos;
+static std::up<legacy::FunctionPassManager> TheFPM;
+static std::up<KaleidoscopeJIT> TheJIT;
+static std::map<std::string, std::up<PrototypeAST>> FunctionProtos;
 static ExitOnError ExitOnErr;
 
 Value *LogErrorV(const char *Str) {
@@ -449,6 +421,7 @@ Value *VariableExprAST::codegen() {
     return LogErrorV("Unknown variable name");
   return V;
 }
+
 
 Value *BinaryExprAST::codegen() {
   Value *L = LHS->codegen();
@@ -544,6 +517,8 @@ Function *FunctionAST::codegen() {
   TheFunction->eraseFromParent();
   return nullptr;
 }
+
+
 
 //===----------------------------------------------------------------------===//
 // Top-Level parsing and JIT Driver
@@ -688,10 +663,6 @@ int main() {
 
   // Install standard binary operators.
   // 1 is lowest precedence.
-  BinopPrecedence['<'] = 10;
-  BinopPrecedence['+'] = 20;
-  BinopPrecedence['-'] = 20;
-  BinopPrecedence['*'] = 40; // highest.
 
   // Prime the first token.
   fprintf(stderr, "ready> ");

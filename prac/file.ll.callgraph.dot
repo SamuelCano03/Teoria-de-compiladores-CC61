@@ -1,0 +1,5 @@
+digraph "Call graph: file.ll" {
+	label="Call graph: file.ll";
+
+	Node0x5602d4348120 [shape=record,label="{main}"];
+}

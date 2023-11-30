@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/prog.dir/AST.cpp.o CMakeFiles/prog.dir/toyc.cpp.o -o prog   -L/usr/lib/llvm-15/lib  -Wl,-rpath,/usr/lib/llvm-15/lib -lLLVM-15 

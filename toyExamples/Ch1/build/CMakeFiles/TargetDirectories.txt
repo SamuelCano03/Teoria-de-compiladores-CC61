@@ -1,0 +1,3 @@
+/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/build/CMakeFiles/prog.dir
+/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/build/CMakeFiles/edit_cache.dir
+/home/samuel/Documents/Teoria-de-compiladores-CC61/toyExamples/Ch1/build/CMakeFiles/rebuild_cache.dir
